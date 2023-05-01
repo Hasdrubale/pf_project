@@ -6,9 +6,15 @@ struct Point {
   double x;
   double y;
 };
-struct Particle {
-  Point position;
-  double angle;
+class Particle {
+ private:
+  Point position_;
+  double angle_;
+
+ public:
+  Particle(Point p, double a) : position_{p}, angle_{a} {}
+  Point position() const;
+  double angle() const;
 };
 class Line {
  private:
@@ -21,7 +27,8 @@ class Line {
       : m_{(b.y - a.y) / (b.x - a.x)},
         q_{(a.y * b.x - b.y * a.x) / (b.x - a.x)} {}
   Line(Particle p)
-      : m_{tan(p.angle)}, q_{p.position.y - tan(p.angle) * p.position.x} {}
+      : m_{tan(p.angle())},
+        q_{p.position().y - tan(p.angle()) * p.position().x} {}
   double m() const;
   double q() const;
 };

@@ -6,3 +6,5 @@ Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
 }
 double Ric::Line::m() const { return m_; }
 double Ric::Line::q() const { return q_; }
+Ric::Point Ric::Particle::position() const { return position_; }
+double Ric::Particle::angle() const { return angle_; }
