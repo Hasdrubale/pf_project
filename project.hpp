@@ -15,6 +15,7 @@ class Particle {
   Particle(Point p, double a) : position_{p}, angle_{a} {}
   Point position() const;
   double angle() const;
+  void move(double const r1, double const r2, double const l);
 };
 class Line {
  private:
