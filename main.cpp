@@ -26,20 +26,21 @@ int main() {
       assert(abs(y) < r1);
       std::cout << "Inserire angolo di partenza: ";
       std::cin >> ang;
-      assert(abs(ang) < M_PI);
+      assert(ang < M_PI && ang > 0);
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
       p.move(r1, r2, l);
-      std::cout << "Y finale: " << p.position().y << "\n" <<"Angolo: "<<p.angle()<<"\n";
+      std::cout << "Y finale: " << p.position().y << "\n"
+                << "Angolo: " << p.angle() << "\n";
     }
-    if (command=='m'){
-        int n{};
-        std::cout << "Inserire numero particelle: ";
-        std::cin >> n;
-        //completare
+    if (command == 'm') {
+      int n{};
+      std::cout << "Inserire numero particelle: ";
+      std::cin >> n;
+      // completare
     }
-    if(command=='q'){
-        exit=false;
+    if (command == 'q') {
+      exit = false;
     }
   }
 }
