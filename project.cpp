@@ -4,6 +4,10 @@ Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
                (r.m() * s.q() - r.q() * s.m()) / (r.m() - s.m())};
   return p;
 }
+void Ric::Point::change(){
+  x=-x;
+  y=-y;
+}
 double Ric::Line::m() const { return m_; }
 double Ric::Line::q() const { return q_; }
 Ric::Point Ric::Particle::position() const { return position_; }
@@ -14,4 +18,13 @@ void Ric::Particle::move(double const r1, double const r2, double const l) {
   // bordo sotto - angolo iniziale (prima dell'urto) l'angolo va da 0 a 180
   // gradi, è con l'asse x. Per l'angolo di incidenza, se è maggiore di 90
   // gradi, utilizzare angolo - 180 (anche se negativo)
+  Ric::Point h{0,r1};
+  Ric::Point k{l,r2};
+  Ric::Line upborder{h,k};
+  h.change();
+  k.change();
+  Ric::Line downborder{h,k};
+  while((*this).position_.x<l){
+    
+  }
 }

@@ -5,6 +5,7 @@ namespace Ric {
 struct Point {
   double x;
   double y;
+  void change();
 };
 class Particle {
  private:
