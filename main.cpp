@@ -2,16 +2,20 @@
 #include <iostream>
 
 #include "project.hpp"
+
 int main() {
+
   double r1{};
   double r2{};
   double l{};
+
   std::cout << "Inserire r1: ";
   std::cin >> r1;
   std::cout << "Inserire r2: ";
   std::cin >> r2;
   std::cout << "Inserire l: ";
   std::cin >> l;
+
   bool exit = true;
   while (exit) {
     char command{};

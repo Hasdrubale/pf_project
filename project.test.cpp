@@ -10,10 +10,12 @@ TEST_CASE("Testing lines") {
     const Ric::Line r{a, b};
     CHECK(r.m() == doctest::Approx(-3.5));
     CHECK(r.q() == doctest::Approx(5.5));
+    CHECK(r.angle() == doctest::Approx(-1.2925));
     const Ric::Particle p{a, M_PI / 4};
     const Ric::Line s{p};
     CHECK(s.m() == doctest::Approx(1.));
     CHECK(s.q() == doctest::Approx(1.));
+    CHECK(s.angle() == doctest::Approx(M_PI / 4));
   }
   SUBCASE("Lines intersection") {
     Ric::Line r{3., 2.};
@@ -22,4 +24,8 @@ TEST_CASE("Testing lines") {
     CHECK(p.x == doctest::Approx(-0.2));
     CHECK(p.y == doctest::Approx(1.4));
   }
+}
+
+TEST_CASE("Testing the motion") {
+  SUBCASE("Test 1") {}
 }
