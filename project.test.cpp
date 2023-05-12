@@ -27,5 +27,14 @@ TEST_CASE("Testing lines") {
 }
 
 TEST_CASE("Testing the motion") {
-  SUBCASE("Test 1") {}
+  SUBCASE("Test 1") {
+    double l{10.};
+    double r1{5.};
+    double r2{3.};
+    Ric::Point p0{0., 4.};
+    Ric::Particle p{p0, M_PI / 4};
+    p.move(r1, r2, l);
+    CHECK(p.position().y==doctest::Approx(-1.8798));
+    CHECK(p.angle()==doctest::Approx(-22.8596*2*M_PI/360));
+  }
 }

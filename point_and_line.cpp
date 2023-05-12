@@ -6,13 +6,13 @@ Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
   return p;
 }
 
-void Ric::Point::change(){
-  x=-x;
-  y=-y;
+void Ric::Point::change() {
+  x = -x;
+  y = -y;
 }
 
 double Ric::Line::m() const { return m_; }
 
 double Ric::Line::q() const { return q_; }
 
-double Ric::Line::angle() const{return atan(m_);}
+double Ric::Line::angle() const { return atan(m_); }
