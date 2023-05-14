@@ -6,8 +6,8 @@
 namespace Ric {
 
 struct Point {
-  double x;
-  double y;
+  double x{0.};
+  double y{0.};
   void change();
 };
 
@@ -27,6 +27,7 @@ class Line {
  private:
   double m_;
   double q_;
+  Point last_{};
 
  public:
   Line(double m, double q);
@@ -35,8 +36,14 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
+  void set_last(Point const&);
+  Point last() const;
 };
+
+bool operator==(Point a, Point b);
 
 Point intsec(Line const& r, Line const& s);
 }  // namespace Ric
+
+
 #endif
