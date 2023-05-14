@@ -25,16 +25,19 @@ class Particle {
 
 class Line {
  private:
-  double m_;
-  double q_;
+  // ax+by+c=0
+  double a_;
+  double b_;
+  double c_;
   Point last_{};
 
  public:
   Line(double m, double q);
   Line(Point a, Point b);
   Line(Particle p);
-  double m() const;
-  double q() const;
+  double a() const;
+  double b() const;
+  double c() const;
   double angle() const;
   void set_last(Point const&);
   Point last() const;
@@ -44,6 +47,5 @@ bool operator==(Point a, Point b);
 
 Point intsec(Line const& r, Line const& s);
 }  // namespace Ric
-
 
 #endif

@@ -1,8 +1,12 @@
 #include "project.hpp"
 
 Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
-  Ric::Point p{(s.q() - r.q()) / (r.m() - s.m()),
-               (r.m() * s.q() - r.q() * s.m()) / (r.m() - s.m())};
+  double det{r.a() * s.b() - r.b() * s.a()};
+  if(std::abs(det)<0.00000001){
+    //throw, o metti un valore molto alto per il metodo move
+  }
+  Ric::Point p{(r.b() * s.c() - s.b() * r.c()) / (det),
+               (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;
 }
 
@@ -11,30 +15,34 @@ void Ric::Point::change() {
   y = -y;
 }
 
-bool Ric::operator==(Ric::Point a, Ric::Point b){
-    return a.x==b.x && a.y==b.y;
+bool Ric::operator==(Ric::Point a, Ric::Point b) {
+  return a.x == b.x && a.y == b.y;
 }
 
-Ric::Line::Line(double m, double q) : m_{m}, q_{q} {}
+Ric::Line::Line(double m, double q) : a_{m}, b_{-1.}, c_{q} {}
 
 Ric::Line::Line(Point a, Point b)
-      : m_{(b.y - a.y) / (b.x - a.x)},
-        q_{(a.y * b.x - b.y * a.x) / (b.x - a.x)} {}
+    : a_{(b.y - a.y)}, b_{(a.x - b.x)}, c_{a.y * b.x - b.y * a.x} {}
 
 Ric::Line::Line(Particle p)
-      : m_{tan(p.angle())},
-        q_{p.position().y - tan(p.angle()) * p.position().x} {}
+    : a_{std::sin(p.angle())},
+      b_{-std::cos(p.angle())},
+      c_{std::cos(p.angle()) * p.position().y - std::sin(p.angle()) * p.position().x} {}
 
-double Ric::Line::m() const { return m_; }
+double Ric::Line::a() const { return a_; }
 
-double Ric::Line::q() const { return q_; }
+double Ric::Line::b() const { return b_; }
 
-double Ric::Line::angle() const { return atan(m_); }
+double Ric::Line::c() const { return c_; }
 
-void Ric::Line::set_last(const Ric::Point & p){
-  last_=p;
+double Ric::Line::angle() const {
+  if (b_ == 0.) {
+    return M_PI / 2;
+  } else {
+    return std::atan(-a_ / b_);
+  }
 }
 
-Ric::Point Ric::Line::last() const{
-  return last_;
-}
+void Ric::Line::set_last(const Ric::Point& p) { last_ = p; }
+
+Ric::Point Ric::Line::last() const { return last_; }

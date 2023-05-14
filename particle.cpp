@@ -12,10 +12,18 @@ void Ric::Particle::move(double const r1, double const r2, double const l) {
   // bordo sotto - angolo iniziale (prima dell'urto) l'angolo va da 0 a 180
   // gradi, è con l'asse x. Per l'angolo di incidenza, se è maggiore di 90
   // gradi, utilizzare angolo - 180 (anche se negativo)
-  Ric::Point h{0,r1};
-  Ric::Point k{l,r2};
-  Ric::Line upborder{h,k};
+  Ric::Point h{0, r1};
+  Ric::Point k{l, r2};
+  Ric::Point i{};
+  Ric::Point j{};
+  Ric::Line upborder{h, k};
   h.change();
   k.change();
-  Ric::Line downborder{h,k};
+  Ric::Line downborder{h, k};
+  // Ric::Line rightborder{};
+  Ric::Line go{*(this)};
+  go.set_last((*this).position());
+  bool exit{true};
+  while (exit) {
+  }
 }

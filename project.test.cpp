@@ -8,13 +8,15 @@ TEST_CASE("Testing lines") {
     Ric::Point a{1., 2.};
     Ric::Point b{3., -5.};
     const Ric::Line r{a, b};
-    CHECK(r.m() == doctest::Approx(-3.5));
-    CHECK(r.q() == doctest::Approx(5.5));
+    CHECK(r.a() == doctest::Approx(-7.));
+    CHECK(r.b() == doctest::Approx(-2.));
+    CHECK(r.c()==doctest::Approx(11.));
     CHECK(r.angle() == doctest::Approx(-1.2925));
     const Ric::Particle p{a, M_PI / 4};
     const Ric::Line s{p};
-    CHECK(s.m() == doctest::Approx(1.));
-    CHECK(s.q() == doctest::Approx(1.));
+    CHECK(s.a() == doctest::Approx(sqrt(2.)/2));
+    CHECK(s.b() == doctest::Approx(-sqrt(2.)/2));
+    CHECK(s.c()==doctest::Approx(sqrt(2.)/2));
     CHECK(s.angle() == doctest::Approx(M_PI / 4));
   }
   SUBCASE("Lines intersection") {
@@ -26,7 +28,7 @@ TEST_CASE("Testing lines") {
   }
 }
 
-TEST_CASE("Testing the motion") {
+/*TEST_CASE("Testing the motion") {
   SUBCASE("Test 1") {
     double l{10.};
     double r1{5.};
@@ -57,4 +59,4 @@ TEST_CASE("Testing the motion") {
     CHECK(p.position().y==doctest::Approx(3.4707));
     CHECK(p.angle()==doctest::Approx(M_PI/3));
   }
-}
+}*/

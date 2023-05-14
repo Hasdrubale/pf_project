@@ -4,7 +4,7 @@
 #include "project.hpp"
 
 int main() {
-
+  //imposta eccezioni e throw, anche nell'intersezione
   double r1{};
   double r2{};
   double l{};
@@ -30,7 +30,7 @@ int main() {
       assert(abs(y) < r1);
       std::cout << "Inserire angolo di partenza: ";
       std::cin >> ang;
-      assert(ang < M_PI/2 && ang > -M_PI/2);
+      assert(ang < M_PI / 2 && ang > -M_PI / 2);
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
       p.move(r1, r2, l);
