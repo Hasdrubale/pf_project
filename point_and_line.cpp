@@ -11,6 +11,16 @@ void Ric::Point::change() {
   y = -y;
 }
 
+Ric::Line::Line(double m, double q) : m_{m}, q_{q} {}
+
+Ric::Line::Line(Point a, Point b)
+      : m_{(b.y - a.y) / (b.x - a.x)},
+        q_{(a.y * b.x - b.y * a.x) / (b.x - a.x)} {}
+        
+Ric::Line::Line(Particle p)
+      : m_{tan(p.angle())},
+        q_{p.position().y - tan(p.angle()) * p.position().x} {}
+
 double Ric::Line::m() const { return m_; }
 
 double Ric::Line::q() const { return q_; }

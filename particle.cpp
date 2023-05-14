@@ -1,5 +1,7 @@
 #include "project.hpp"
 
+Ric::Particle::Particle(Point p, double a) : position_{p}, angle_{a} {}
+
 Ric::Point Ric::Particle::position() const { return position_; }
 
 double Ric::Particle::angle() const { return angle_; }
