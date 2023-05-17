@@ -7,14 +7,26 @@ bool Ric::operator!=(Ric::Point a, Ric::Point b) {
 Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
   double det{r.a() * s.b() - r.b() * s.a()};
   if (std::abs(det) < 0.00000001) {
-    // throw, o metti un valore molto alto per il metodo move
+    Ric::Point p{1000000., 1000000.};
+    return p;  // ritorna un valore altissimo, in modo che la funzione move non
+               // lo prenda in considerazione
   }
   Ric::Point p{(r.b() * s.c() - s.b() * r.c()) / (det),
                (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;
 }
 
-Ric::Line Ric::ort(const Ric::Line& r, const Ric::Point& p) {}
+Ric::Line Ric::ort(const Ric::Line& r, const Ric::Point& p) {
+  double new_angle{};
+  if (r.angle() >= 0) {
+    new_angle = -((M_PI / 2) - r.angle());
+  } else {
+    new_angle = (M_PI / 2) + r.angle();
+  }
+  Ric::Particle k{p, new_angle};
+  Ric::Line l{k};
+  return l;
+}
 
 void Ric::move(double const r1, double const r2, double const l,
                Ric::Particle& p) {
@@ -37,7 +49,44 @@ void Ric::move(double const r1, double const r2, double const l,
     j = Ric::intsec(go, leftborder);
     k = Ric::intsec(go, rightborder);
 
-    if (std::abs(j.y) < r1 && j !=) {
+    if (std::abs(j.y) < r1 && j != p.position()) {
+      p.set_position(j);
+      p.set_angle(-go.angle());
+      go.set_new(p);
+    }
+
+    if (std::abs(k.y) < r2) {
+      p.set_position(k);
+      p.set_angle(go.angle());
+      exit = false;
+    }
+
+    if (std::abs(i.x) > 0 && std::abs(i.x) < l && std::abs(i.y) > r2 &&
+        std::abs(i.y) < r1 && i != p.position()) {
+      Ric::Line s{ort(downborder, i)};
+      double angle{std::abs(std::atan(go.m()) - std::atan(s.m()))};
+      p.set_angle(std::atan(go.m()) - angle);
+      if (std::abs(p.angle() - std::atan(s.m())) < 0.0001) {
+        p.set_angle(p.angle() - angle);
+      } else {
+        p.set_angle(p.angle() + 3 * angle);
+      }
+      p.set_position(i);
+      go.set_new(p);
+    }
+
+    if (std::abs(h.x) > 0 && std::abs(h.x) < l && std::abs(h.y) > r2 &&
+        std::abs(h.y) < r1 && h != p.position()) {
+      Ric::Line s{ort(upborder, h)};
+      double angle{std::abs(std::atan(go.m()) - std::atan(s.m()))};
+      p.set_angle(std::atan(go.m()) - angle);
+      if (std::abs(p.angle() - std::atan(s.m())) < 0.0001) {
+        p.set_angle(p.angle() - angle);
+      } else {
+        p.set_angle(p.angle() + 3 * angle);
+      }
+      p.set_position(h);
+      go.set_new(p);
     }
   }
 }

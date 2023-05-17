@@ -24,7 +24,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile statistics.t
-  add_executable(project.t project.test.cpp point_and_line.cpp particle.cpp)
+  add_executable(project.t project.test.cpp functions.cpp methods.cpp)
   # aggiungi l'eseguibile statistics.t alla lista dei test
   add_test(NAME project.t COMMAND project.t)
 

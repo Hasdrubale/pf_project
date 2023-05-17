@@ -20,6 +20,8 @@ class Particle {
   Particle(Point p, double a);
   Point position() const;
   double angle() const;
+  void set_position(Point const);
+  void set_angle(double const);
 };
 
 class Line {
@@ -37,7 +39,10 @@ class Line {
   double a() const;
   double b() const;
   double c() const;
+  double m() const;
+  double q() const;
   double angle() const;
+  void set_new(Particle const);
 };
 
 bool operator!=(Point a, Point b);

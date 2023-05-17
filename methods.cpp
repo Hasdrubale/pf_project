@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "project.hpp"
 
 void Ric::Point::change() {
@@ -30,8 +32,24 @@ double Ric::Line::angle() const {
   }
 }
 
+double Ric::Line::m() const { return -(a_ / b_); }
+
+double Ric::Line::q() const { return -(c_ / b_); }
+
 Ric::Particle::Particle(Point p, double a) : position_{p}, angle_{a} {}
 
 Ric::Point Ric::Particle::position() const { return position_; }
 
 double Ric::Particle::angle() const { return angle_; }
+
+void Ric::Particle::set_position(Ric::Point const p) { position_ = p; }
+
+void Ric::Particle::set_angle(double const r) {
+  assert(std::abs(r) <= M_PI / 2);
+  angle_ = r;
+}
+
+void Ric::Line::set_new(Particle const p) {
+  Ric::Line l{p};
+  (*this) = l;
+}
