@@ -1,8 +1,6 @@
 #ifndef PROJECT_HPP
 #define PROJECT_HPP
 
-#include <cmath>
-
 namespace Ric {
 
 struct Point {
@@ -22,6 +20,8 @@ class Particle {
   double angle() const;
   void set_position(Point const);
   void set_angle(double const);
+  void rotate_forward(double const);
+  void rotate_backward(double const);
 };
 
 class Line {
@@ -49,10 +49,11 @@ bool operator!=(Point a, Point b);
 
 Point intsec(Line const& r, Line const& s);
 
-Line ort(Line const&, Point const&);
+Line const ort(Line const&, Point const&);
 
 void move(double const, double const, double const, Ric::Particle&);
 
+double find_angle(Line const&, Line const&);
 }  // namespace Ric
 
 #endif

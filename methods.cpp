@@ -1,11 +1,9 @@
 #include <cassert>
+#include <cmath>
 
 #include "project.hpp"
 
-void Ric::Point::change() {
-  x = -x;
-  y = -y;
-}
+void Ric::Point::change() { y = -y; }
 
 Ric::Line::Line(double m, double q) : a_{m}, b_{-1.}, c_{q} {}
 
@@ -36,6 +34,13 @@ double Ric::Line::m() const { return -(a_ / b_); }
 
 double Ric::Line::q() const { return -(c_ / b_); }
 
+void Ric::Line::set_new(Particle const p) {
+  Ric::Line l{p};
+  a_ = l.a();
+  b_ = l.b();
+  c_ = l.c();
+}
+
 Ric::Particle::Particle(Point p, double a) : position_{p}, angle_{a} {}
 
 Ric::Point Ric::Particle::position() const { return position_; }
@@ -49,7 +54,47 @@ void Ric::Particle::set_angle(double const r) {
   angle_ = r;
 }
 
-void Ric::Line::set_new(Particle const p) {
-  Ric::Line l{p};
-  (*this) = l;
+void Ric::Particle::rotate_backward(double const angle) {
+  assert(angle <= M_PI / 2 && angle >= 0);
+  double a{angle_};
+  a -= angle;
+  if (a < -M_PI / 2) {
+    a = (M_PI / 2) + ((a / (M_PI / 2)) - 1);
+  }
+  angle_ = a;
+  assert(std::abs(angle_) <= M_PI / 2);
+}
+
+void Ric::Particle::rotate_forward(double const angle) {
+  assert(angle <= M_PI / 2 && angle >= 0);
+  double a{angle_};
+  a += angle;
+  if (a > M_PI / 2) {
+    a = -(M_PI / 2) + ((a / (M_PI / 2)) - 1);
+  }
+  angle_ = a;
+  assert(std::abs(angle_) <= M_PI / 2);
+}
+
+double Ric::find_angle(Ric::Line const& r, Ric::Line const& s) {
+  double r_ang{};
+  double s_ang{};
+  if (r.m() < 0) {
+    r_ang = (M_PI / 2) + std::abs(std::atan(r.m()));
+  } else {
+    r_ang = std::atan(r.m());
+  }
+  if (s.m() < 0) {
+    s_ang = (M_PI / 2) + std::abs(std::atan(s.m()));
+  } else {
+    s_ang = std::atan(s.m());
+  }
+  assert(r_ang >= 0 && r_ang <= M_PI);
+  assert(s_ang >= 0 && s_ang <= M_PI);
+  double ang{std::abs(r_ang - s_ang)};
+  assert(ang >= 0 && ang <= M_PI);
+  if (ang > M_PI / 2) {
+    ang = M_PI - ang;
+  }
+  return ang;
 }

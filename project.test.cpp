@@ -44,7 +44,7 @@ TEST_CASE("Testing the motion") {
     double r2{3.};
     Ric::Point p0{0., 4.};
     Ric::Particle p{p0, M_PI / 4};
-    move(r1, r2, l, p);
+    Ric::move(r1, r2, l, p);
     CHECK(p.position().y == doctest::Approx(-1.8798));
     CHECK(p.angle() == doctest::Approx(-22.8596 * 2 * M_PI / 360));
   }
@@ -54,7 +54,7 @@ TEST_CASE("Testing the motion") {
     double r2{3.};
     Ric::Point p0{0., 2.};
     Ric::Particle p{p0, -M_PI / 6};
-    move(r1, r2, l, p);
+    Ric::move(r1, r2, l, p);
     CHECK(p.position().y == doctest::Approx(-1.4641));
     CHECK(p.angle() == doctest::Approx(-M_PI / 6));
   }
@@ -64,7 +64,7 @@ TEST_CASE("Testing the motion") {
     double r2{4.};
     Ric::Point p0{0., -1.};
     Ric::Particle p{p0, M_PI / 3};
-    move(r1, r2, l, p);
+    Ric::move(r1, r2, l, p);
     CHECK(p.position().y == doctest::Approx(3.4707));
     CHECK(p.angle() == doctest::Approx(M_PI / 3));
   }
