@@ -20,7 +20,6 @@ class Particle {
   Particle(Point p, double a);
   Point position() const;
   double angle() const;
-  void move(double const r1, double const r2, double const l);
 };
 
 class Line {
@@ -39,13 +38,16 @@ class Line {
   double b() const;
   double c() const;
   double angle() const;
-  void set_last(Point const&);
-  Point last() const;
 };
 
-bool operator==(Point a, Point b);
+bool operator!=(Point a, Point b);
 
 Point intsec(Line const& r, Line const& s);
+
+Line ort(Line const&, Point const&);
+
+void move(double const, double const, double const, Ric::Particle&);
+
 }  // namespace Ric
 
 #endif

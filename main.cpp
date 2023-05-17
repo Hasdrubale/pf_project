@@ -4,7 +4,7 @@
 #include "project.hpp"
 
 int main() {
-  //imposta eccezioni e throw, anche nell'intersezione
+  // imposta eccezioni e throw, anche nell'intersezione
   double r1{};
   double r2{};
   double l{};
@@ -33,7 +33,7 @@ int main() {
       assert(ang < M_PI / 2 && ang > -M_PI / 2);
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
-      p.move(r1, r2, l);
+      Ric::move(r1, r2, l, p);
       std::cout << "Y finale: " << p.position().y << "\n"
                 << "Angolo: " << p.angle() << "\n";
     }
