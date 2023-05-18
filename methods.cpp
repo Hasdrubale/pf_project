@@ -59,7 +59,7 @@ void Ric::Particle::rotate_backward(double const angle) {
   double a{angle_};
   a -= angle;
   if (a < -M_PI / 2) {
-    a = (M_PI / 2) + ((a / (M_PI / 2)) - 1);
+    a += M_PI;
   }
   angle_ = a;
   assert(std::abs(angle_) <= M_PI / 2);
@@ -70,7 +70,7 @@ void Ric::Particle::rotate_forward(double const angle) {
   double a{angle_};
   a += angle;
   if (a > M_PI / 2) {
-    a = -(M_PI / 2) + ((a / (M_PI / 2)) - 1);
+    a -= M_PI;
   }
   angle_ = a;
   assert(std::abs(angle_) <= M_PI / 2);
