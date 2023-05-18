@@ -3,8 +3,6 @@
 
 #include "project.hpp"
 
-void Ric::Point::change() { y = -y; }
-
 Ric::Line::Line(double m, double q) : a_{m}, b_{-1.}, c_{q} {}
 
 Ric::Line::Line(Point a, Point b)
@@ -75,4 +73,3 @@ void Ric::Particle::rotate_forward(double const angle) {
   angle_ = a;
   assert(std::abs(angle_) <= M_PI / 2);
 }
-

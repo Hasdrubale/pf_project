@@ -62,8 +62,8 @@ void Ric::move(double const r1, double const r2, double const l,
   Ric::Point i{0, 0};
   Ric::Point j{l, 0};
   Ric::Line const upborder{h, k};
-  h.change();
-  k.change();
+  h.y = -h.y;
+  k.y = -k.y;
   Ric::Line const downborder{h, k};
   Ric::Line const rightborder{k, j};
   Ric::Line const leftborder{i, h};
@@ -75,6 +75,8 @@ void Ric::move(double const r1, double const r2, double const l,
     i = Ric::intsec(go, downborder);
     j = Ric::intsec(go, leftborder);
     k = Ric::intsec(go, rightborder);
+    Ric::Line const down_perp{ort(downborder, i)};
+    Ric::Line const up_perp{ort(upborder, h)};
 
     if (std::abs(j.y) < r1 && j != p.position()) {
       p.set_position(j);
@@ -91,10 +93,9 @@ void Ric::move(double const r1, double const r2, double const l,
 
     if (std::abs(i.x) > 0 && std::abs(i.x) < l && std::abs(i.y) > r2 &&
         std::abs(i.y) < r1 && i != p.position()) {
-      Ric::Line s{ort(downborder, i)};
-      double angle = Ric::find_angle(s, go);
+      double angle = Ric::find_angle(down_perp, go);
       p.rotate_forward(angle);
-      if (std::abs(p.angle() - std::atan(s.m())) < 0.0001) {
+      if (std::abs(p.angle() - std::atan(down_perp.m())) < 0.0001) {
         p.rotate_forward(angle);
       } else {
         p.rotate_backward(angle);
@@ -108,10 +109,9 @@ void Ric::move(double const r1, double const r2, double const l,
 
     if (std::abs(h.x) > 0 && std::abs(h.x) < l && std::abs(h.y) > r2 &&
         std::abs(h.y) < r1 && h != p.position()) {
-      Ric::Line const s{ort(upborder, h)};
-      double angle = Ric::find_angle(s, go);
+      double angle = Ric::find_angle(up_perp, go);
       p.rotate_forward(angle);
-      if (std::abs(p.angle() - std::atan(s.m())) < 0.0001) {
+      if (std::abs(p.angle() - std::atan(up_perp.m())) < 0.0001) {
         p.rotate_forward(angle);
       } else {
         p.rotate_backward(angle);

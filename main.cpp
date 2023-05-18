@@ -1,6 +1,6 @@
 #include <cassert>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 #include "project.hpp"
 
@@ -50,11 +50,11 @@
   }
 }*/
 
-int main(){
-    double l{14.};
-    double r1{7.};
-    double r2{4.};
-    Ric::Point p0{0., -1.};
-    Ric::Particle p{p0, M_PI / 3};
-    Ric::move(r1, r2, l, p);
+int main() {
+  double l{14.};
+  double r1{7.};
+  double r2{4.};
+  Ric::Point p0{0., -1.};
+  Ric::Particle p{p0, M_PI / 3};
+  Ric::move(r1, r2, l, p);
 }
