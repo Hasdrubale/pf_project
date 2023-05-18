@@ -1,5 +1,6 @@
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
 #include "project.hpp"
 
@@ -34,16 +35,21 @@ Ric::Line const Ric::ort(const Ric::Line& r, const Ric::Point& p) {
 double Ric::find_angle(Ric::Line const& r, Ric::Line const& s) {
   double r_ang{};
   double s_ang{};
+  int giorgio;
   if (r.m() < 0) {
     r_ang = (M_PI / 2) + std::abs(std::atan(r.m()));
   } else {
     r_ang = std::atan(r.m());
   }
+  std::cout << r_ang << "\n";
+  std::cin >> giorgio;
   if (s.m() < 0) {
     s_ang = (M_PI / 2) + std::abs(std::atan(s.m()));
   } else {
     s_ang = std::atan(s.m());
   }
+  std::cout << s_ang << "\n";
+  std::cin >> giorgio;
   assert(r_ang >= 0 && r_ang <= M_PI);
   assert(s_ang >= 0 && s_ang <= M_PI);
   double ang{std::abs(r_ang - s_ang)};
@@ -51,6 +57,8 @@ double Ric::find_angle(Ric::Line const& r, Ric::Line const& s) {
   if (ang > M_PI / 2) {
     ang = M_PI - ang;
   }
+  std::cout<<ang<<"\n";
+  std::cin>>giorgio;
   return ang;
 }
 
@@ -76,6 +84,7 @@ void Ric::move(double const r1, double const r2, double const l,
     k = Ric::intsec(go, rightborder);
 
     if (std::abs(j.y) < r1 && j != p.position()) {
+      std::cout<<"Leftborder";
       p.set_position(j);
       p.set_angle(-go.angle());
       go.set_new(p);
@@ -90,6 +99,7 @@ void Ric::move(double const r1, double const r2, double const l,
 
     if (std::abs(i.x) > 0 && std::abs(i.x) < l && std::abs(i.y) > r2 &&
         std::abs(i.y) < r1 && i != p.position()) {
+          std::cout<<"Downborder";
       Ric::Line s{ort(downborder, i)};
       double angle = Ric::find_angle(s, go);
       p.rotate_forward(angle);
@@ -107,6 +117,7 @@ void Ric::move(double const r1, double const r2, double const l,
 
     if (std::abs(h.x) > 0 && std::abs(h.x) < l && std::abs(h.y) > r2 &&
         std::abs(h.y) < r1 && h != p.position()) {
+          std::cout<<"Upborder";
       Ric::Line const s{ort(upborder, h)};
       double angle = Ric::find_angle(s, go);
       p.rotate_forward(angle);
