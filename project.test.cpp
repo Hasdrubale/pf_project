@@ -46,7 +46,7 @@ TEST_CASE("Testing the motion") {
     Ric::Particle p{p0, M_PI / 4};
     Ric::move(r1, r2, l, p);
     CHECK(p.position().y == doctest::Approx(-1.8798));
-    CHECK(p.angle() == doctest::Approx(-22.8596 * 2 * M_PI / 360));
+    CHECK(p.angle() == doctest::Approx(-67.14040516 * 2 * M_PI / 360));
   }
   SUBCASE("Test 2") {
     double l{6.};

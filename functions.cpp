@@ -5,7 +5,7 @@
 #include "project.hpp"
 
 bool Ric::operator!=(Ric::Point a, Ric::Point b) {
-  return (a.x - b.x) > 0.001 || (a.y - b.y) > 0.001;
+  return std::abs((a.x - b.x)) > 0.001 || std::abs((a.y - b.y)) > 0.001;
 }
 
 Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
