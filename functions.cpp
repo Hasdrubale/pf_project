@@ -36,12 +36,12 @@ double Ric::find_angle(Ric::Line const& r, Ric::Line const& s) {
   double r_ang{};
   double s_ang{};
   if (r.m() < 0) {
-    r_ang = M_PI + std::atan(r.m()) ;
+    r_ang = (M_PI / 2) + std::abs(std::atan(r.m()));
   } else {
     r_ang = std::atan(r.m());
   }
   if (s.m() < 0) {
-    s_ang = M_PI + std::atan(s.m());
+    s_ang = (M_PI / 2) + std::abs(std::atan(s.m()));
   } else {
     s_ang = std::atan(s.m());
   }
