@@ -1,9 +1,10 @@
 #include <cassert>
 #include <iostream>
+#include <cmath>
 
 #include "project.hpp"
 
-int main() {
+/*int main() {
   // imposta eccezioni e throw, anche nell'intersezione
   double r1{};
   double r2{};
@@ -47,4 +48,8 @@ int main() {
       exit = false;
     }
   }
+}*/
+
+int main(){
+  
 }
