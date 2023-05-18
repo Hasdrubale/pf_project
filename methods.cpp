@@ -76,25 +76,3 @@ void Ric::Particle::rotate_forward(double const angle) {
   assert(std::abs(angle_) <= M_PI / 2);
 }
 
-double Ric::find_angle(Ric::Line const& r, Ric::Line const& s) {
-  double r_ang{};
-  double s_ang{};
-  if (r.m() < 0) {
-    r_ang = (M_PI / 2) + std::abs(std::atan(r.m()));
-  } else {
-    r_ang = std::atan(r.m());
-  }
-  if (s.m() < 0) {
-    s_ang = (M_PI / 2) + std::abs(std::atan(s.m()));
-  } else {
-    s_ang = std::atan(s.m());
-  }
-  assert(r_ang >= 0 && r_ang <= M_PI);
-  assert(s_ang >= 0 && s_ang <= M_PI);
-  double ang{std::abs(r_ang - s_ang)};
-  assert(ang >= 0 && ang <= M_PI);
-  if (ang > M_PI / 2) {
-    ang = M_PI - ang;
-  }
-  return ang;
-}
