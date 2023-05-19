@@ -1,11 +1,11 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <random>
 
 #include "project.hpp"
 
-/*int main() {
-  // imposta eccezioni e throw, anche nell'intersezione
+int main() {
   double r1{};
   double r2{};
   double l{};
@@ -17,8 +17,7 @@
   std::cout << "Inserire l: ";
   std::cin >> l;
 
-  bool exit = true;
-  while (exit) {
+  while (true) {
     char command{};
     std::cout << "Comando: ";
     std::cin >> command;
@@ -29,32 +28,29 @@
       std::cout << "Inserire y0: ";
       std::cin >> y;
       assert(abs(y) < r1);
-      std::cout << "Inserire angolo di partenza: ";
+      std::cout << "Inserire angolo di partenza (in gradi): ";
       std::cin >> ang;
+      ang = (ang / 360.) * 2 * M_PI;
       assert(ang < M_PI / 2 && ang > -M_PI / 2);
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
       Ric::move(r1, r2, l, p);
       std::cout << "Y finale: " << p.position().y << "\n"
-                << "Angolo: " << p.angle() << "\n";
+                << "Angolo (radianti):" << p.angle() << "\n"
+                << "Angolo (gradi): " << ((p.angle() / (2 * M_PI)) * 360)
+                << "\n";
+      continue;
     }
     if (command == 'm') {
       int n{};
       std::cout << "Inserire numero particelle: ";
       std::cin >> n;
-      // completare
+      std::random_device r;
+      std::default_random_engine eng{r()};
+      std::normal_distribution<double> d{0, M_PI / 6};
     }
     if (command == 'q') {
-      exit = false;
+      break;
     }
   }
-}*/
-
-int main() {
-  double l{14.};
-  double r1{7.};
-  double r2{4.};
-  Ric::Point p0{0., -1.};
-  Ric::Particle p{p0, M_PI / 3};
-  Ric::move(r1, r2, l, p);
 }
