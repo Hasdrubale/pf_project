@@ -1,30 +1,34 @@
 #include <cassert>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <random>
+#include <array>
+#include <algorithm>
 
 #include "project.hpp"
 
 int main() {
   double r1{};
   double r2{};
-  double l{};
-
-  std::cout << "Inserire r1: ";
-  std::cin >> r1;
-  std::cout << "Inserire r2: ";
-  std::cin >> r2;
-  std::cout << "Inserire l: ";
-  std::cin >> l;
 
   while (true) {
     char command{};
     std::cout << "Comando: ";
     std::cin >> command;
-    assert(command == 's' || command == 'm' || command == 'q');
-    if (command == 's') {
+    assert(command == 'm' || command == 'a' || command == 'q');
+
+    if (command == 'm') {
+      double l{};
       double y{};
       double ang{};
+      std::cout << "Inserire r1: ";
+      std::cin >> r1;
+      std::cout << "Inserire r2: ";
+      std::cin >> r2;
+      assert(r2 > 0 && r2 < r1);
+      std::cout << "Inserire l: ";
+      std::cin >> l;
       std::cout << "Inserire y0: ";
       std::cin >> y;
       assert(abs(y) < r1);
@@ -41,14 +45,38 @@ int main() {
                 << "\n";
       continue;
     }
-    if (command == 'm') {
+
+    if (command == 'a') {
       int n{};
-      std::cout << "Inserire numero particelle: ";
-      std::cin >> n;
+      double l_min{};
+      double l_max{};
+      double step{};
+      double mean_y{};
+      double sigma_y{};
+      double mean_ang{};
+      double sigma_ang{};
+      std::ifstream in_file{"input.txt"};
+      in_file >> r1;
+      in_file >> r2;
+      assert(r2 > 0 && r2 < r1);
+      in_file >> l_min;
+      in_file >> l_max;
+      in_file >> step;
+      in_file >> n;
+      in_file >> mean_y;
+      assert(mean_y < r1);
+      in_file >> sigma_y;
+      in_file >> mean_ang;
+      assert(mean_ang > -M_PI / 2 && mean_ang < M_PI / 2);
+      in_file >> sigma_ang;
       std::random_device r;
       std::default_random_engine eng{r()};
-      std::normal_distribution<double> d{0, M_PI / 6};
+      std::normal_distribution<double> y{mean_y, sigma_y};
+      std::normal_distribution<double> angle{mean_ang, sigma_ang};
+      std::vector<Ric::Particle> particles{};
+      //std::generate_n(particles.begin(), n, )
     }
+
     if (command == 'q') {
       break;
     }
