@@ -55,6 +55,7 @@ int main() {
       double sigma_y{};
       double mean_ang{};
       double sigma_ang{};
+
       std::ifstream in_file{"input.txt"};
       in_file >> r1;
       in_file >> r2;
@@ -69,12 +70,13 @@ int main() {
       in_file >> mean_ang;
       assert(mean_ang > -M_PI / 2 && mean_ang < M_PI / 2);
       in_file >> sigma_ang;
+
       std::random_device r;
       std::default_random_engine eng{r()};
-      std::normal_distribution<double> y{mean_y, sigma_y};
-      std::normal_distribution<double> angle{mean_ang, sigma_ang};
+      Gen::PartG g{eng};
       std::vector<Ric::Particle> particles{};
-      //std::generate_n(particles.begin(), n, )
+
+      std::generate_n(particles.begin(), n, g);
     }
 
     if (command == 'q') {

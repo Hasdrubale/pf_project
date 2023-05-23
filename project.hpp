@@ -1,6 +1,8 @@
 #ifndef PROJECT_HPP
 #define PROJECT_HPP
 
+#include <random>
+
 namespace Ric {
 
 struct Point {
@@ -17,7 +19,7 @@ class Particle {
   Particle(Point p, double a);
   Point position() const;
   double angle() const;
-  void set_position(Point const);
+  void set_position(Point const&);
   void set_angle(double const);
   void rotate_forward(double const);
   void rotate_backward(double const);
@@ -54,5 +56,15 @@ void move(double const, double const, double const, Ric::Particle&);
 
 double find_angle(Line const&, Line const&);
 }  // namespace Ric
+
+namespace Gen{
+
+    class PartG{
+        std::default_random_engine eng_;
+        public:
+            PartG(std::default_random_engine eng);
+            Ric::Particle operator()(double const mean_y, double const sigma_y, double const mean_ang, double const sigma_ang, double const r1);
+    };
+}
 
 #endif

@@ -45,7 +45,7 @@ Ric::Point Ric::Particle::position() const { return position_; }
 
 double Ric::Particle::angle() const { return angle_; }
 
-void Ric::Particle::set_position(Ric::Point const p) { position_ = p; }
+void Ric::Particle::set_position(Ric::Point const& p) { position_ = p; }
 
 void Ric::Particle::set_angle(double const r) {
   assert(std::abs(r) <= M_PI / 2);
