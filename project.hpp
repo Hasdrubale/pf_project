@@ -57,14 +57,20 @@ void move(double const, double const, double const, Ric::Particle&);
 double find_angle(Line const&, Line const&);
 }  // namespace Ric
 
-namespace Gen{
+namespace Gen {
 
-    class PartG{
-        std::default_random_engine eng_;
-        public:
-            PartG(std::default_random_engine eng);
-            Ric::Particle operator()(double const mean_y, double const sigma_y, double const mean_ang, double const sigma_ang, double const r1);
-    };
-}
+class PartG {
+  std::default_random_engine eng_;
+  double const mean_y_;
+  double const sigma_y_;
+  double const mean_ang_;
+  double const sigma_ang_;
+  double const r1_;
+
+ public:
+  PartG(std::default_random_engine eng, double const mean_y, double const sigma_y, double const mean_ang, double const sigma_ang, double const r1);
+  Ric::Particle operator()();
+};
+}  // namespace Gen
 
 #endif

@@ -1,10 +1,10 @@
+#include <algorithm>
+#include <array>
 #include <cassert>
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <random>
-#include <array>
-#include <algorithm>
 
 #include "project.hpp"
 
@@ -73,9 +73,10 @@ int main() {
 
       std::random_device r;
       std::default_random_engine eng{r()};
-      Gen::PartG g{eng};
+      Gen::PartG g{eng, mean_y, sigma_y, mean_ang, sigma_ang, r1};
       std::vector<Ric::Particle> particles{};
 
+      particles.reserve(n);
       std::generate_n(particles.begin(), n, g);
     }
 
