@@ -38,7 +38,8 @@ int main() {
       assert(ang < M_PI / 2 && ang > -M_PI / 2);
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
-      Ric::move(r1, r2, l, p);
+      Gen::PartM move{r1, r2, l};
+      p = move(p);
       std::cout << "Y finale: " << p.position().y << "\n"
                 << "Angolo (radianti):" << p.angle() << "\n"
                 << "Angolo (gradi): " << ((p.angle() / (2 * M_PI)) * 360)
@@ -63,6 +64,7 @@ int main() {
       in_file >> l_min;
       in_file >> l_max;
       in_file >> step;
+      assert(step <= l_max - l_min);
       in_file >> n;
       in_file >> mean_y;
       assert(mean_y < r1);
@@ -78,6 +80,11 @@ int main() {
 
       particles.reserve(n);
       std::generate_n(particles.begin(), n, g);
+
+      for (double l{l_min}; l <= l_max; l += step) {
+        std::vector<Ric::Particle> transf{};
+        transf.reserve(n);
+      }
     }
 
     if (command == 'q') {

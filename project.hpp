@@ -52,8 +52,6 @@ Point intsec(Line const& r, Line const& s);
 
 Line const ort(Line const&, Point const&);
 
-void move(double const, double const, double const, Ric::Particle&);
-
 double find_angle(Line const&, Line const&);
 }  // namespace Ric
 
@@ -70,6 +68,16 @@ class PartG {
  public:
   PartG(std::default_random_engine eng, double const mean_y, double const sigma_y, double const mean_ang, double const sigma_ang, double const r1);
   Ric::Particle operator()();
+};
+
+class PartM{
+  double const r1_;
+  double const r2_;
+  double const l_;
+
+  public:
+  PartM(double const r1, double const r2, double const l);
+  Ric::Particle operator()(Ric::Particle& p);
 };
 }  // namespace Gen
 
