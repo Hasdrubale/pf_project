@@ -32,7 +32,7 @@ Ric::Particle Gen::PartG::operator()() {
 Gen::PartM::PartM(double const r1, double const r2, double const l)
     : r1_{r1}, r2_{r2}, l_{l} {}
 
-Ric::Particle Gen::PartM::operator()(Ric::Particle& p) {
+void Gen::PartM::operator()(Ric::Particle& p) {
   Ric::Point h{0, r1_};
   Ric::Point k{l_, r2_};
   Ric::Point i{0, 0};
@@ -99,5 +99,4 @@ Ric::Particle Gen::PartM::operator()(Ric::Particle& p) {
       continue;
     }
   }
-  return p;
 }

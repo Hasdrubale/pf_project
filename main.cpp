@@ -2,7 +2,6 @@
 #include <array>
 #include <cassert>
 #include <cmath>
-#include <fstream>
 #include <iostream>
 #include <random>
 
@@ -39,7 +38,7 @@ int main() {
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
       Gen::PartM move{r1, r2, l};
-      p = move(p);
+      move(p);
       std::cout << "Y finale: " << p.position().y << "\n"
                 << "Angolo (radianti):" << p.angle() << "\n"
                 << "Angolo (gradi): " << ((p.angle() / (2 * M_PI)) * 360)
@@ -49,22 +48,18 @@ int main() {
 
     if (command == 'a') {
       int n{};
-      double l_min{};
-      double l_max{};
-      double step{};
+      double l{};
       double mean_y{};
       double sigma_y{};
       double mean_ang{};
       double sigma_ang{};
 
       std::ifstream in_file{"input.txt"};
+      std::ofstream out_file{"output.txt"};
       in_file >> r1;
       in_file >> r2;
       assert(r2 > 0 && r2 < r1);
-      in_file >> l_min;
-      in_file >> l_max;
-      in_file >> step;
-      assert(step <= l_max - l_min);
+      in_file >> l;
       in_file >> n;
       in_file >> mean_y;
       assert(mean_y < r1);
@@ -77,14 +72,23 @@ int main() {
       std::default_random_engine eng{r()};
       Gen::PartG g{eng, mean_y, sigma_y, mean_ang, sigma_ang, r1};
       std::vector<Ric::Particle> particles{};
-
       particles.reserve(n);
       std::generate_n(particles.begin(), n, g);
-
-      for (double l{l_min}; l <= l_max; l += step) {
-        std::vector<Ric::Particle> transf{};
-        transf.reserve(n);
+      out_file << "Posizioni e angoli iniziali (x, y e angolo)\n\n";
+      for (int i{0}; i < n; ++i) {
+        out_file << particles[i].position().x << " "
+                 << particles[i].position().y << " " << particles[i].angle()
+                 << "\n";
       }
+      out_file << "\n";
+      Gen::PartM move(r1, r2, l);
+      std::for_each_n(particles.begin(), n, move);
+      out_file << "l = " << l << "\n\n";
+      for (int i{0}; i < n; ++i) {
+        out_file << particles[i].position().x << " " << particles[i].position().y
+                 << " " << particles[i].angle() << "\n";
+      }
+      out_file << "\n";
     }
 
     if (command == 'q') {

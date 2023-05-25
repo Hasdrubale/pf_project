@@ -1,6 +1,7 @@
 #ifndef PROJECT_HPP
 #define PROJECT_HPP
 
+#include <fstream>
 #include <random>
 
 namespace Ric {
@@ -48,11 +49,12 @@ class Line {
 
 bool operator!=(Point a, Point b);
 
-Point intsec(Line const& r, Line const& s);
+Point intsec(Line const& r, Line const& s);  // controlla constness
 
 Line const ort(Line const&, Point const&);
 
 double find_angle(Line const&, Line const&);
+
 }  // namespace Ric
 
 namespace Gen {
@@ -66,18 +68,20 @@ class PartG {
   double const r1_;
 
  public:
-  PartG(std::default_random_engine eng, double const mean_y, double const sigma_y, double const mean_ang, double const sigma_ang, double const r1);
+  PartG(std::default_random_engine eng, double const mean_y,
+        double const sigma_y, double const mean_ang, double const sigma_ang,
+        double const r1);
   Ric::Particle operator()();
 };
 
-class PartM{
+class PartM {
   double const r1_;
   double const r2_;
   double const l_;
 
-  public:
+ public:
   PartM(double const r1, double const r2, double const l);
-  Ric::Particle operator()(Ric::Particle& p);
+  void operator()(Ric::Particle& p);
 };
 }  // namespace Gen
 

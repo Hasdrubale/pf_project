@@ -47,9 +47,7 @@ double Ric::Particle::angle() const { return angle_; }
 
 void Ric::Particle::set_position(Ric::Point const& p) { position_ = p; }
 
-void Ric::Particle::set_angle(double const r) {
-  angle_ = r;
-}
+void Ric::Particle::set_angle(double const r) { angle_ = r; }
 
 void Ric::Particle::rotate_backward(double const angle) {
   assert(angle <= M_PI / 2 && angle >= 0);
