@@ -18,13 +18,13 @@ string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
-add_executable(project main.cpp functions.cpp methods.cpp generator.cpp)
+add_executable(project main.cpp ric_functions.cpp ric_methods.cpp gen.cpp stats.cpp)
 # se il testing e' abilitato...
 #   per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile statistics.t
-  #add_executable(project.t project.test.cpp functions.cpp methods.cpp generator.cpp)
+  #add_executable(project.t project.test.cpp ric_functions.cpp ric_methods.cpp gen.cpp stats.cpp)
   # aggiungi l'eseguibile statistics.t alla lista dei test
   #add_test(NAME project.t COMMAND project.t)
 

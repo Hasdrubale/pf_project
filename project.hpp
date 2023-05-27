@@ -85,4 +85,9 @@ class PartM {
 };
 }  // namespace Gen
 
+namespace Stats{
+  struct Statistics{
+
+  };
+}
 #endif
