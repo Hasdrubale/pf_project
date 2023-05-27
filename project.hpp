@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <random>
+#include <string>
 
 namespace Ric {
 
@@ -85,9 +86,25 @@ class PartM {
 };
 }  // namespace Gen
 
-namespace Stats{
-  struct Statistics{
+namespace Stats {
 
-  };
-}
+struct Statistics {
+  double mean{};
+  double sigma{};
+  double simm{};
+  double app{};
+};
+
+class Sample {
+ private:
+  std::vector<Ric::Particle> particles_{};
+
+ public:
+  Sample(std::vector<Ric::Particle> particles);
+  void read(std::string s);
+  Statistics statistics_y();
+  Statistics statistics_ang();
+};
+
+}  // namespace Stats
 #endif
