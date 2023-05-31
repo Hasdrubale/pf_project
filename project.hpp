@@ -33,7 +33,6 @@ class Line {
   double a_;
   double b_;
   double c_;
-  Point last_{};
 
  public:
   Line(double m, double q);
@@ -45,7 +44,7 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  void set_new(Particle const);
+  void set_new(Particle const); //riguarda assignment
 };
 
 bool operator!=(Point a, Point b);
@@ -57,6 +56,7 @@ Line const ort(Line const&, Point const&);
 double find_angle(Line const&, Line const&);
 
 }  // namespace Ric
+
 
 namespace Gen {
 
@@ -86,6 +86,7 @@ class PartM {
 };
 }  // namespace Gen
 
+
 namespace Stats {
 
 struct Statistics {
@@ -101,6 +102,7 @@ class Sample {
 
  public:
   Sample(std::vector<Ric::Particle> particles);
+  std::vector<Ric::Particle> vec();
   void read(std::string s);
   Statistics statistics_y();
   Statistics statistics_ang();
