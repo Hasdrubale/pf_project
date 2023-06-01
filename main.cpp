@@ -97,6 +97,8 @@ int main() {
     }
 
     if (command == 's') {
+      std::string s{};
+      std::cin>>s
     }
 
     if (command == 'q') {

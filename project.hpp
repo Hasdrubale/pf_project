@@ -104,8 +104,8 @@ class Sample {
   Sample(std::vector<Ric::Particle> particles);
   std::vector<Ric::Particle> vec();
   void read(std::string s);
-  Statistics statistics_y();
-  Statistics statistics_ang();
+  const Statistics statistics_y() const;
+  const Statistics statistics_ang() const;
 };
 
 }  // namespace Stats
