@@ -75,10 +75,12 @@ int main() {
       std::random_device r;
       std::default_random_engine eng{r()};
       Gen::PartG g{eng, mean_y, sigma_y, mean_ang, sigma_ang, r1};
+      Ric::Point def{0, 0};
+      Ric::Particle defp{def, 0.};
       std::vector<Ric::Particle> particles{};
-      particles.reserve(n);
+      particles.resize(n, defp);
       std::generate_n(particles.begin(), n, g);
-
+      std::cout << particles.size();
       for (int i{0}; i < n; ++i) {
         out_init << particles[i].position().x << " "
                  << particles[i].position().y << " " << particles[i].angle()

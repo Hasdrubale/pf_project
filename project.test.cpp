@@ -87,15 +87,14 @@ TEST_CASE("Testing statistics") {
 
   Stats::Sample c{particles};
   Stats::Statistics y{c.statistics_y()};
-  // Stats::Statistics ang{c.statistics_ang()};
+  Stats::Statistics ang{c.statistics_ang()};
 
   CHECK(y.mean == doctest::Approx(2.6));
   CHECK(y.sigma == doctest::Approx(0.953939));
   CHECK(y.simm == doctest::Approx(-0.103676));
   CHECK(y.app == doctest::Approx(0.66666));
-  CHECK(c.vec().size() == 3);
-  // CHECK(ang.mean == doctest::Approx(0.333333));
-  // CHECK(ang.sigma == doctest::Approx(0.960902));
-  // CHECK(ang.simm == doctest::Approx(-0.16823));
-  // CHECK(ang.app == doctest::Approx(0.66666));
+  CHECK(ang.mean == doctest::Approx(0.333333));
+  CHECK(ang.sigma == doctest::Approx(0.960902));
+  CHECK(ang.simm == doctest::Approx(-0.16823));
+  CHECK(ang.app == doctest::Approx(0.66666));
 }
