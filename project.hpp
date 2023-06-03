@@ -14,8 +14,8 @@ struct Point {
 
 class Particle {
  private:
-  Point position_;
-  double angle_;
+  Point position_{};
+  double angle_{};
 
  public:
   Particle(Point p, double a);
@@ -44,7 +44,7 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  void set_new(Particle const); //riguarda assignment
+  void set_new(Particle const);  // riguarda assignment
 };
 
 bool operator!=(Point a, Point b);
@@ -56,7 +56,6 @@ Line const ort(Line const&, Point const&);
 double find_angle(Line const&, Line const&);
 
 }  // namespace Ric
-
 
 namespace Gen {
 
@@ -85,7 +84,6 @@ class PartM {
   void operator()(Ric::Particle& p);
 };
 }  // namespace Gen
-
 
 namespace Stats {
 
