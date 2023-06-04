@@ -19,6 +19,8 @@ int main() {
   std::ifstream in_file{"input.txt"};
   std::ofstream out_init{"outinit.txt"};
   std::ofstream out_fin{"outfin.txt"};
+  std::vector<Ric::Particle> input{};
+  std::vector<Ric::Particle> output{};
 
   in_file >> r1;
   in_file >> r2;
@@ -84,6 +86,7 @@ int main() {
         out_init << particles[i].position().x << " "
                  << particles[i].position().y << " " << particles[i].angle()
                  << "\n";
+        input.push_back(particles[i]);
       }
 
       Gen::PartM move(r1, r2, l);
@@ -92,62 +95,109 @@ int main() {
       for (int i{0}; i < n; ++i) {
         out_fin << particles[i].position().x << " " << particles[i].position().y
                 << " " << particles[i].angle() << "\n";
+        output.push_back(particles[i]);
       }
     }
 
     if (command == 's') {
-      char s{};
-      std::cin >> s;
-      assert(s == 'i' || s == 'o');
-      std::vector<Ric::Particle> p{};
-      Stats::Sample sample{p};
-      sample.read(s);
+      Stats::Sample sample{input};
       Stats::Statistics y{sample.statistics_y()};
       Stats::Statistics ang{sample.statistics_ang()};
 
-      std::cout << "Posizione finale y:\nMedia: " << y.mean
+      std::cout << "Posizione y iniziale:\nMedia: " << y.mean
                 << "\nDeviazione standard: " << y.sigma
                 << "\nCoefficiente di simmetria: " << y.simm;
-      if (y.simm > 0.0000001) {
+      if (y.simm > 0.01) {
         std::cout << " (distribuzione asimmetrica positiva)\n";
       }
-      if (y.simm < -0.0000001) {
+      if (y.simm < -0.01) {
         std::cout << " (distribuzione asimmetrica negativa)\n";
       }
-      if (y.simm >= -0.0000001 && y.simm <= 0.0000001) {
+      if (y.simm >= -0.01 && y.simm <= 0.01) {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << y.app;
-      if (y.simm > 3.0000001) {
+      if (y.simm > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (y.simm < 2.9999999) {
+      if (y.simm < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (y.simm >= 2.9999999 && y.simm <= 3.0000001) {
+      if (y.simm >= 2.99 && y.simm <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
 
-      std::cout << "\nAngolo finale\nMedia: " << ang.mean
+      std::cout << "\nAngolo iniziale\nMedia: " << ang.mean
                 << "\nDeviazione standard: " << ang.sigma
                 << "\nCoefficiente di simmetria: " << ang.simm;
-      if (ang.simm > 0.0000001) {
+      if (ang.simm > 0.01) {
         std::cout << " (distribuzione asimmetrica positiva)\n";
       }
-      if (ang.simm < -0.0000001) {
+      if (ang.simm < -0.01) {
         std::cout << " (distribuzione asimmetrica negativa)\n";
       }
-      if (ang.simm >= -0.0000001 && ang.simm <= 0.0000001) {
+      if (ang.simm >= -0.01 && ang.simm <= 0.01) {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << ang.app;
-      if (ang.simm > 3.0000001) {
+      if (ang.simm > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (ang.simm < 2.9999999) {
+      if (ang.simm < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (ang.simm >= 2.9999999 && ang.simm <= 3.0000001) {
+      if (ang.simm >= 2.99 && ang.simm <= 3.01) {
+        std::cout << " (distribuzione mesocurtica)\n";
+      }
+      std::cout << "\n";
+
+      Stats::Sample samplef{output};
+      Stats::Statistics yf{samplef.statistics_y()};
+      Stats::Statistics angf{samplef.statistics_ang()};
+
+      std::cout << "Posizione y iniziale:\nMedia: " << yf.mean
+                << "\nDeviazione standard: " << yf.sigma
+                << "\nCoefficiente di simmetria: " << yf.simm;
+      if (yf.simm > 0.01) {
+        std::cout << " (distribuzione asimmetrica positiva)\n";
+      }
+      if (yf.simm < -0.01) {
+        std::cout << " (distribuzione asimmetrica negativa)\n";
+      }
+      if (yf.simm >= -0.01 && yf.simm <= 0.01) {
+        std::cout << " (distribuzione simmetrica)\n";
+      }
+      std::cout << "Coefficiente di appiattimento: " << yf.app;
+      if (yf.simm > 3.01) {
+        std::cout << " (distribuzione leptocurtica)\n";
+      }
+      if (yf.simm < 2.99) {
+        std::cout << " (distribuzione platicurtica)\n";
+      }
+      if (yf.simm >= 2.99 && yf.simm <= 3.01) {
+        std::cout << " (distribuzione mesocurtica)\n";
+      }
+
+      std::cout << "\nAngolo iniziale\nMedia: " << angf.mean
+                << "\nDeviazione standard: " << angf.sigma
+                << "\nCoefficiente di simmetria: " << angf.simm;
+      if (angf.simm > 0.01) {
+        std::cout << " (distribuzione asimmetrica positiva)\n";
+      }
+      if (angf.simm < -0.01) {
+        std::cout << " (distribuzione asimmetrica negativa)\n";
+      }
+      if (angf.simm >= -0.01 && angf.simm <= 0.01) {
+        std::cout << " (distribuzione simmetrica)\n";
+      }
+      std::cout << "Coefficiente di appiattimento: " << angf.app;
+      if (angf.simm > 3.01) {
+        std::cout << " (distribuzione leptocurtica)\n";
+      }
+      if (angf.simm < 2.99) {
+        std::cout << " (distribuzione platicurtica)\n";
+      }
+      if (angf.simm >= 2.99 && angf.simm <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
       std::cout << "\n";

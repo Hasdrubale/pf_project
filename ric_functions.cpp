@@ -10,11 +10,6 @@ bool Ric::operator!=(Ric::Point a, Ric::Point b) {
 
 Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
   double det{r.a() * s.b() - r.b() * s.a()};
-  if (std::abs(det) < 0.00000001) {
-    Ric::Point p{1000000., 1000000.};
-    return p;  // ritorna un valore altissimo, in modo che la funzione move non
-               // lo prenda in considerazione
-  }
   Ric::Point p{(r.b() * s.c() - s.b() * r.c()) / (det),
                (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;

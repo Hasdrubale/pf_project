@@ -99,8 +99,6 @@ class Sample {
 
  public:
   Sample(std::vector<Ric::Particle> particles);
-  std::vector<Ric::Particle> vec();
-  void read(char s);
   const Statistics statistics_y() const;
   const Statistics statistics_ang() const;
 };

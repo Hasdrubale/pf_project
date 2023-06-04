@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include <string>
 
 #include "project.hpp"
@@ -6,13 +7,11 @@
 Stats::Sample::Sample(std::vector<Ric::Particle> particles)
     : particles_{particles} {}
 
-std::vector<Ric::Particle> Stats::Sample::vec() { return particles_; }
-
 const Stats::Statistics Stats::Sample::statistics_y() const {
   std::vector<double> ys;
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
-                 [](Ric::Particle p) { return p.position().y; });
+                 [](const Ric::Particle p) { return p.position().y; });
   double mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
   double sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
                                      [=](double acc, double i) {
@@ -66,30 +65,4 @@ const Stats::Statistics Stats::Sample::statistics_ang() const {
               (ys.size()))};
   Statistics statistics{mean, sigma, simm, app};
   return statistics;
-}
-
-void Stats::Sample::read(char s) {
-  std::string str;
-  if (s == 'i') {
-    str = "outinit.txt";
-  }
-  if (s == 'o') {
-    str = "outfin.txt";
-  }
-  std::ifstream file{str};
-  while (true) {
-    double x;
-    double y;
-    double ang;
-    file >> x;
-    file >> y;
-    file >> ang;
-    if (file) {
-      Ric::Point p{x, y};
-      Ric::Particle par{p, ang};
-      particles_.push_back(par);
-    } else {
-      break;
-    }
-  }
 }

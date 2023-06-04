@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 
 #include "project.hpp"
 
@@ -17,7 +18,7 @@ Ric::Particle Gen::PartG::operator()() {
   std::normal_distribution<double> dist_ang{mean_ang_, sigma_ang_};
   Ric::Point pos{0., dist_y(eng_)};
   Ric::Particle p{pos, dist_ang(eng_)};
-  
+
   while (p.angle() <= -M_PI / 2 || p.angle() >= M_PI / 2) {
     p.set_angle(dist_ang(eng_));
   }
@@ -45,6 +46,8 @@ void Gen::PartM::operator()(Ric::Particle& p) {
   Ric::Line const leftborder{i, h};
   Ric::Line go{p};
 
+  Ric::Particle problem{p};
+
   while (true) {
     assert(std::abs(p.position().x) <= l_);
     h = Ric::intsec(go, upborder);
@@ -54,21 +57,21 @@ void Gen::PartM::operator()(Ric::Particle& p) {
     Ric::Line const down_perp{ort(downborder, i)};
     Ric::Line const up_perp{ort(upborder, h)};
 
-    if (std::abs(j.y) < r1_ && j != p.position()) {
+    if (std::abs(j.y) <= r1_ && j != p.position()) {
       p.set_position(j);
       p.set_angle(-go.angle());
       go.set_new(p);
       continue;
     }
 
-    if (std::abs(k.y) < r2_) {
+    if (std::abs(k.y) <= r2_) {
       p.set_position(k);
       p.set_angle(go.angle());
       break;
     }
 
-    if (std::abs(i.x) > 0 && std::abs(i.x) < l_ && std::abs(i.y) > r2_ &&
-        std::abs(i.y) < r1_ && i != p.position()) {
+    if (std::abs(i.x) >= 0 && std::abs(i.x) <= l_ && std::abs(i.y) >= r2_ &&
+        std::abs(i.y) <= r1_ && i != p.position()) {
       double angle = Ric::find_angle(down_perp, go);
       p.rotate_forward(angle);
       if (std::abs(p.angle() - std::atan(down_perp.m())) < 0.0001) {
@@ -83,8 +86,8 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       continue;
     }
 
-    if (std::abs(h.x) > 0 && std::abs(h.x) < l_ && std::abs(h.y) > r2_ &&
-        std::abs(h.y) < r1_ && h != p.position()) {
+    if (std::abs(h.x) >= 0 && std::abs(h.x) <= l_ && std::abs(h.y) >= r2_ &&
+        std::abs(h.y) <= r1_ && h != p.position()) {
       double angle = Ric::find_angle(up_perp, go);
       p.rotate_forward(angle);
       if (std::abs(p.angle() - std::atan(up_perp.m())) < 0.0001) {
@@ -98,5 +101,9 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       go.set_new(p);
       continue;
     }
+    std::cout << "Particella problematica: x = " << problem.position().x
+              << "\ny = " << problem.position().y
+              << "\nangolo = " << problem.angle() << "\n";
+    break;
   }
 }
