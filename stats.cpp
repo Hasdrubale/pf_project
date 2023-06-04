@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <string>
 
 #include "project.hpp"
 
@@ -7,7 +8,7 @@ Stats::Sample::Sample(std::vector<Ric::Particle> particles)
 
 std::vector<Ric::Particle> Stats::Sample::vec() { return particles_; }
 
-const Stats::Statistics Stats::Sample::statistics_y() const{
+const Stats::Statistics Stats::Sample::statistics_y() const {
   std::vector<double> ys;
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
@@ -67,8 +68,15 @@ const Stats::Statistics Stats::Sample::statistics_ang() const {
   return statistics;
 }
 
-void Stats::Sample::read(std::string s) {
-  std::ifstream file{s};
+void Stats::Sample::read(char s) {
+  std::string str;
+  if (s == 'i') {
+    str = "outinit.txt";
+  }
+  if (s == 'o') {
+    str = "outfin.txt";
+  }
+  std::ifstream file{str};
   while (true) {
     double x;
     double y;

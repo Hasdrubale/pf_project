@@ -96,15 +96,17 @@ int main() {
     }
 
     if (command == 's') {
-      std::string s{};
+      char s{};
       std::cin >> s;
+      assert(s == 'i' || s == 'o');
       std::vector<Ric::Particle> p{};
       Stats::Sample sample{p};
       sample.read(s);
       Stats::Statistics y{sample.statistics_y()};
       Stats::Statistics ang{sample.statistics_ang()};
 
-      std::cout << "Posizione finale y:\nMedia: " << y.mean << "\nDeviazione standard: " << y.sigma
+      std::cout << "Posizione finale y:\nMedia: " << y.mean
+                << "\nDeviazione standard: " << y.sigma
                 << "\nCoefficiente di simmetria: " << y.simm;
       if (y.simm > 0.0000001) {
         std::cout << " (distribuzione asimmetrica positiva)\n";
@@ -126,7 +128,8 @@ int main() {
         std::cout << " (distribuzione mesocurtica)\n";
       }
 
-      std::cout << "\nAngolo finale\nMedia: " << ang.mean << "\nDeviazione standard: " << ang.sigma
+      std::cout << "\nAngolo finale\nMedia: " << ang.mean
+                << "\nDeviazione standard: " << ang.sigma
                 << "\nCoefficiente di simmetria: " << ang.simm;
       if (ang.simm > 0.0000001) {
         std::cout << " (distribuzione asimmetrica positiva)\n";
@@ -147,7 +150,7 @@ int main() {
       if (ang.simm >= 2.9999999 && ang.simm <= 3.0000001) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
-      std::cout<<"\n";
+      std::cout << "\n";
     }
 
     if (command == 'q') {

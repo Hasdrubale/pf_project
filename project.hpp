@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <random>
-#include <string>
 
 namespace Ric {
 
@@ -101,7 +100,7 @@ class Sample {
  public:
   Sample(std::vector<Ric::Particle> particles);
   std::vector<Ric::Particle> vec();
-  void read(std::string s);
+  void read(char s);
   const Statistics statistics_y() const;
   const Statistics statistics_ang() const;
 };

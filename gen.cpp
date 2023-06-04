@@ -17,7 +17,7 @@ Ric::Particle Gen::PartG::operator()() {
   std::normal_distribution<double> dist_ang{mean_ang_, sigma_ang_};
   Ric::Point pos{0., dist_y(eng_)};
   Ric::Particle p{pos, dist_ang(eng_)};
-
+  
   while (p.angle() <= -M_PI / 2 || p.angle() >= M_PI / 2) {
     p.set_angle(dist_ang(eng_));
   }
