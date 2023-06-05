@@ -46,7 +46,8 @@ void Gen::PartM::operator()(Ric::Particle& p) {
   Ric::Line const leftborder{i, h};
   Ric::Line go{p};
 
-  Ric::Particle problem{p};
+  Ric::Particle init{p};
+  bool hit{true};
 
   while (true) {
     assert(std::abs(p.position().x) <= l_);
@@ -101,9 +102,18 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       go.set_new(p);
       continue;
     }
-    std::cout << "Particella problematica: x = " << problem.position().x
+    /*std::cout << "Particella problematica: x = " << problem.position().x
               << "\ny = " << problem.position().y
-              << "\nangolo = " << problem.angle() << "\n";
-    break;
+              << "\nangolo = " << problem.angle() << "\n"
+              << "Numero iterazioni: " << bo << "\n";
+    break;*/
+    if (hit) {
+      p.set_position(init.position());
+      p.set_angle(-init.angle());
+      go.set_new(p);
+      hit=false;
+    } else {
+      break;
+    }
   }
 }

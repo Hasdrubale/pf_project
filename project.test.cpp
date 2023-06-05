@@ -71,6 +71,17 @@ TEST_CASE("Testing the motion") {
     CHECK(p.position().y == doctest::Approx(3.4707));
     CHECK(p.angle() == doctest::Approx(M_PI / 3));
   }
+  SUBCASE("Test 4: hitting a point") {
+    double const l{10.};
+    double const r1{5.};
+    double const r2{3.};
+    Ric::Point p0{0., 0.28305};
+    Ric::Particle p{p0, 0.886213};
+    Gen::PartM move{r1, r2, l};
+    move(p);
+    CHECK(p.position().y == doctest::Approx(-2.214018));
+    CHECK(p.angle() == doctest::Approx(1.071));
+  }
 }
 
 TEST_CASE("Testing statistics") {

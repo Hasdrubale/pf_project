@@ -73,6 +73,7 @@ int main() {
 
     if (command == 'a') {
       int n{};
+      int exit{0};
       std::cin >> n;
       std::random_device r;
       std::default_random_engine eng{r()};
@@ -93,10 +94,16 @@ int main() {
       std::for_each_n(particles.begin(), n, move);
 
       for (int i{0}; i < n; ++i) {
-        out_fin << particles[i].position().x << " " << particles[i].position().y
-                << " " << particles[i].angle() << "\n";
-        output.push_back(particles[i]);
+        if (std::abs(particles[i].position().x - 10.) < 0.00001) {
+          out_fin << particles[i].position().x << " "
+                  << particles[i].position().y << " " << particles[i].angle()
+                  << "\n";
+          output.push_back(particles[i]);
+        } else {
+          ++exit;
+        }
       }
+      std::cout << exit << " particelle non sono uscite dal biliardo\n";
     }
 
     if (command == 's') {
