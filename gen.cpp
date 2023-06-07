@@ -102,11 +102,6 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       go.set_new(p);
       continue;
     }
-    /*std::cout << "Particella problematica: x = " << problem.position().x
-              << "\ny = " << problem.position().y
-              << "\nangolo = " << problem.angle() << "\n"
-              << "Numero iterazioni: " << bo << "\n";
-    break;*/
     if (hit) {
       p.set_position(init.position());
       p.set_angle(-init.angle());
