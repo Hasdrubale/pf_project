@@ -44,6 +44,8 @@ void Gen::PartM::operator()(Ric::Particle& p) {
   Ric::Line const downborder{h, k};
   Ric::Line const rightborder{k, j};
   Ric::Line const leftborder{i, h};
+  Ric::Line const down_perp{ort(downborder, i)};
+  Ric::Line const up_perp{ort(upborder, h)};
   Ric::Line go{p};
 
   Ric::Particle init{p};
@@ -55,8 +57,6 @@ void Gen::PartM::operator()(Ric::Particle& p) {
     i = Ric::intsec(go, downborder);
     j = Ric::intsec(go, leftborder);
     k = Ric::intsec(go, rightborder);
-    Ric::Line const down_perp{ort(downborder, i)};
-    Ric::Line const up_perp{ort(upborder, h)};
 
     if (std::abs(j.y) <= r1_ && j != p.position()) {
       p.set_position(j);
@@ -111,7 +111,7 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       p.set_position(init.position());
       p.set_angle(-init.angle());
       go.set_new(p);
-      hit=false;
+      hit = false;
     } else {
       break;
     }

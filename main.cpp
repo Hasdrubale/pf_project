@@ -64,10 +64,14 @@ int main() {
       Ric::Particle p{pos, ang};
       Gen::PartM move{r1f, r2f, l};
       move(p);
-      std::cout << "Y finale: " << p.position().y << "\n"
-                << "Angolo (radianti):" << p.angle() << "\n"
-                << "Angolo (gradi): " << ((p.angle() / (2 * M_PI)) * 360)
-                << "\n";
+      if (std::abs(p.position().x - l) < 0.0001) {
+        std::cout << "Y finale: " << p.position().y << "\n"
+                  << "Angolo (radianti):" << p.angle() << "\n"
+                  << "Angolo (gradi): " << ((p.angle() / (2 * M_PI)) * 360)
+                  << "\n";
+      } else {
+        std::cout << "Particella non uscita dal biliardo\n";
+      }
       continue;
     }
 
@@ -94,7 +98,7 @@ int main() {
       std::for_each_n(particles.begin(), n, move);
 
       for (int i{0}; i < n; ++i) {
-        if (std::abs(particles[i].position().x - 10.) < 0.00001) {
+        if (std::abs(particles[i].position().x - l) < 0.00001) {
           out_fin << particles[i].position().x << " "
                   << particles[i].position().y << " " << particles[i].angle()
                   << "\n";
@@ -104,6 +108,7 @@ int main() {
         }
       }
       std::cout << exit << " particelle non sono uscite dal biliardo\n";
+      continue;
     }
 
     if (command == 's') {
@@ -162,7 +167,7 @@ int main() {
       Stats::Statistics yf{samplef.statistics_y()};
       Stats::Statistics angf{samplef.statistics_ang()};
 
-      std::cout << "Posizione y iniziale:\nMedia: " << yf.mean
+      std::cout << "Posizione y finale:\nMedia: " << yf.mean
                 << "\nDeviazione standard: " << yf.sigma
                 << "\nCoefficiente di simmetria: " << yf.simm;
       if (yf.simm > 0.01) {
@@ -185,7 +190,7 @@ int main() {
         std::cout << " (distribuzione mesocurtica)\n";
       }
 
-      std::cout << "\nAngolo iniziale\nMedia: " << angf.mean
+      std::cout << "\nAngolo finale\nMedia: " << angf.mean
                 << "\nDeviazione standard: " << angf.sigma
                 << "\nCoefficiente di simmetria: " << angf.simm;
       if (angf.simm > 0.01) {
@@ -208,6 +213,7 @@ int main() {
         std::cout << " (distribuzione mesocurtica)\n";
       }
       std::cout << "\n";
+      continue;
     }
 
     if (command == 'q') {
