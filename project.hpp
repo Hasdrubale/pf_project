@@ -43,14 +43,14 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  void set_new(Particle const);  // riguarda assignment
+  void set_new(Particle const);
 };
 
 bool operator!=(Point a, Point b);
 
-Point intsec(Line const& r, Line const& s);  // controlla constness
+const Point intsec(Line const& r, Line const& s);
 
-Line const ort(Line const&, Point const&);
+const Line ort(Line const&, Point const&);
 
 double find_angle(Line const&, Line const&);
 
@@ -87,10 +87,10 @@ class PartM {
 namespace Stats {
 
 struct Statistics {
-  double mean{};
-  double sigma{};
-  double simm{};
-  double app{};
+  double const mean{};
+  double const sigma{};
+  double const simm{};
+  double const app{};
 };
 
 class Sample {

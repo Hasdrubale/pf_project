@@ -12,20 +12,20 @@ const Stats::Statistics Stats::Sample::statistics_y() const {
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
                  [](const Ric::Particle p) { return p.position().y; });
-  double mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
-  double sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
+  double const mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
+  double const sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
                                      [=](double acc, double i) {
                                        return acc + (i - mean) * (i - mean);
                                      }) /
                      (ys.size() - 1)))};
-  double simm{(std::accumulate(ys.begin(), ys.end(), 0.,
+  double const simm{(std::accumulate(ys.begin(), ys.end(), 0.,
                                [=](double acc, double i) {
                                  return acc + ((i - mean) / sigma) *
                                                   ((i - mean) / sigma) *
                                                   ((i - mean) / sigma);
                                }) /
                (ys.size()))};
-  double app{(std::accumulate(ys.begin(), ys.end(), 0.,
+  double const app{(std::accumulate(ys.begin(), ys.end(), 0.,
                               [=](double acc, double i) {
                                 return acc + ((i - mean) / sigma) *
                                                  ((i - mean) / sigma) *
@@ -42,20 +42,20 @@ const Stats::Statistics Stats::Sample::statistics_ang() const {
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
                  [](Ric::Particle p) { return p.angle(); });
-  double mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
-  double sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
+  double const mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
+  double const sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
                                      [=](double acc, double i) {
                                        return acc + (i - mean) * (i - mean);
                                      }) /
                      (ys.size() - 1)))};
-  double simm{(std::accumulate(ys.begin(), ys.end(), 0.,
+  double const simm{(std::accumulate(ys.begin(), ys.end(), 0.,
                                [=](double acc, double i) {
                                  return acc + ((i - mean) / sigma) *
                                                   ((i - mean) / sigma) *
                                                   ((i - mean) / sigma);
                                }) /
                (ys.size()))};
-  double app{(std::accumulate(ys.begin(), ys.end(), 0.,
+  double const app{(std::accumulate(ys.begin(), ys.end(), 0.,
                               [=](double acc, double i) {
                                 return acc + ((i - mean) / sigma) *
                                                  ((i - mean) / sigma) *

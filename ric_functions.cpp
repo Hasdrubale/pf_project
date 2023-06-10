@@ -8,14 +8,14 @@ bool Ric::operator!=(Ric::Point a, Ric::Point b) {
   return std::abs((a.x - b.x)) > 0.001 || std::abs((a.y - b.y)) > 0.001;
 }
 
-Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
+const Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
   double det{r.a() * s.b() - r.b() * s.a()};
   Ric::Point p{(r.b() * s.c() - s.b() * r.c()) / (det),
                (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;
 }
 
-Ric::Line const Ric::ort(const Ric::Line& r, const Ric::Point& p) {
+const Ric::Line Ric::ort(const Ric::Line& r, const Ric::Point& p) {
   double new_angle{};
   if (r.angle() >= 0) {
     new_angle = -((M_PI / 2) - r.angle());
