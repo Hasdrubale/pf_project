@@ -1,9 +1,8 @@
 #include <algorithm>
-#include <array>
 #include <cassert>
 #include <cmath>
+#include <fstream>
 #include <iostream>
-#include <random>
 
 #include "project.hpp"
 
@@ -46,6 +45,7 @@ int main() {
       double r1f{};
       double r2f{};
       double ang{};
+
       std::cout << "Inserire r1: ";
       std::cin >> r1f;
       std::cout << "Inserire r2: ";
@@ -60,10 +60,12 @@ int main() {
       std::cin >> ang;
       ang = (ang / 360.) * 2 * M_PI;
       assert(ang < M_PI / 2 && ang > -M_PI / 2);
+
       Ric::Point pos{0, y};
       Ric::Particle p{pos, ang};
       Gen::PartM move{r1f, r2f, l};
       move(p);
+
       if (std::abs(p.position().x - l) < 0.0001) {
         std::cout << "Y finale: " << p.position().y << "\n"
                   << "Angolo (radianti):" << p.angle() << "\n"
@@ -79,6 +81,7 @@ int main() {
       int n{};
       int exit{0};
       std::cin >> n;
+
       std::random_device r;
       std::default_random_engine eng{r()};
       Gen::PartG g{eng, mean_y, sigma_y, mean_ang, sigma_ang, r1};
@@ -87,6 +90,7 @@ int main() {
       std::vector<Ric::Particle> particles{};
       particles.resize(n, defp);
       std::generate_n(particles.begin(), n, g);
+
       for (int i{0}; i < n; ++i) {
         out_init << particles[i].position().x << " "
                  << particles[i].position().y << " " << particles[i].angle()
@@ -107,14 +111,15 @@ int main() {
           ++exit;
         }
       }
+
       std::cout << exit << " particelle non sono uscite dal biliardo\n";
       continue;
     }
 
     if (command == 's') {
       Stats::Sample sample{input};
-      Stats::Statistics y{sample.statistics_y()};
-      Stats::Statistics ang{sample.statistics_ang()};
+      const Stats::Statistics y{sample.statistics_y()};
+      const Stats::Statistics ang{sample.statistics_ang()};
 
       std::cout << "Posizione y iniziale:\nMedia: " << y.mean
                 << "\nDeviazione standard: " << y.sigma

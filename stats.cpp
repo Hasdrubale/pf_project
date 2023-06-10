@@ -1,6 +1,4 @@
 #include <algorithm>
-#include <iostream>
-#include <string>
 
 #include "project.hpp"
 
@@ -14,25 +12,26 @@ const Stats::Statistics Stats::Sample::statistics_y() const {
                  [](const Ric::Particle p) { return p.position().y; });
   double const mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
   double const sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
-                                     [=](double acc, double i) {
-                                       return acc + (i - mean) * (i - mean);
-                                     }) /
-                     (ys.size() - 1)))};
+                                           [=](double acc, double i) {
+                                             return acc +
+                                                    (i - mean) * (i - mean);
+                                           }) /
+                           (ys.size() - 1)))};
   double const simm{(std::accumulate(ys.begin(), ys.end(), 0.,
-                               [=](double acc, double i) {
-                                 return acc + ((i - mean) / sigma) *
-                                                  ((i - mean) / sigma) *
-                                                  ((i - mean) / sigma);
-                               }) /
-               (ys.size()))};
+                                     [=](double acc, double i) {
+                                       return acc + ((i - mean) / sigma) *
+                                                        ((i - mean) / sigma) *
+                                                        ((i - mean) / sigma);
+                                     }) /
+                     (ys.size()))};
   double const app{(std::accumulate(ys.begin(), ys.end(), 0.,
-                              [=](double acc, double i) {
-                                return acc + ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma);
-                              }) /
-              (ys.size()))};
+                                    [=](double acc, double i) {
+                                      return acc + ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma);
+                                    }) /
+                    (ys.size()))};
   Statistics statistics{mean, sigma, simm, app};
   return statistics;
 }
@@ -44,25 +43,26 @@ const Stats::Statistics Stats::Sample::statistics_ang() const {
                  [](Ric::Particle p) { return p.angle(); });
   double const mean{std::accumulate(ys.begin(), ys.end(), 0.) / ys.size()};
   double const sigma{sqrt((std::accumulate(ys.begin(), ys.end(), 0.,
-                                     [=](double acc, double i) {
-                                       return acc + (i - mean) * (i - mean);
-                                     }) /
-                     (ys.size() - 1)))};
+                                           [=](double acc, double i) {
+                                             return acc +
+                                                    (i - mean) * (i - mean);
+                                           }) /
+                           (ys.size() - 1)))};
   double const simm{(std::accumulate(ys.begin(), ys.end(), 0.,
-                               [=](double acc, double i) {
-                                 return acc + ((i - mean) / sigma) *
-                                                  ((i - mean) / sigma) *
-                                                  ((i - mean) / sigma);
-                               }) /
-               (ys.size()))};
+                                     [=](double acc, double i) {
+                                       return acc + ((i - mean) / sigma) *
+                                                        ((i - mean) / sigma) *
+                                                        ((i - mean) / sigma);
+                                     }) /
+                     (ys.size()))};
   double const app{(std::accumulate(ys.begin(), ys.end(), 0.,
-                              [=](double acc, double i) {
-                                return acc + ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma) *
-                                                 ((i - mean) / sigma);
-                              }) /
-              (ys.size()))};
+                                    [=](double acc, double i) {
+                                      return acc + ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma) *
+                                                       ((i - mean) / sigma);
+                                    }) /
+                    (ys.size()))};
   Statistics statistics{mean, sigma, simm, app};
   return statistics;
 }

@@ -1,6 +1,5 @@
 #include <cassert>
 #include <cmath>
-#include <iostream>
 
 #include "project.hpp"
 
@@ -9,9 +8,9 @@ bool Ric::operator!=(Ric::Point a, Ric::Point b) {
 }
 
 const Ric::Point Ric::intsec(Ric::Line const& r, Ric::Line const& s) {
-  double det{r.a() * s.b() - r.b() * s.a()};
-  Ric::Point p{(r.b() * s.c() - s.b() * r.c()) / (det),
-               (s.a() * r.c() - r.a() * s.c()) / (det)};
+  double const det{r.a() * s.b() - r.b() * s.a()};
+  Ric::Point const p{(r.b() * s.c() - s.b() * r.c()) / (det),
+                     (s.a() * r.c() - r.a() * s.c()) / (det)};
   return p;
 }
 
