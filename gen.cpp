@@ -102,6 +102,7 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       go.set_new(p);
       continue;
     }
+    
     if (hit) {
       p.set_position(init.position());
       p.set_angle(-init.angle());
