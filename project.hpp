@@ -42,7 +42,7 @@ class Line {
   double m() const;
   double q() const;
   double angle() const;
-  void set_new(Particle const);
+  void set_new(Particle const&);
 };
 
 bool operator!=(Point a, Point b);

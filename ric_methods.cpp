@@ -32,7 +32,7 @@ double Ric::Line::m() const { return -(a_ / b_); }
 
 double Ric::Line::q() const { return -(c_ / b_); }
 
-void Ric::Line::set_new(Particle const p) {
+void Ric::Line::set_new(Particle const& p) {
   Ric::Line l{p};
   a_ = l.a();
   b_ = l.b();
