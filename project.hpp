@@ -98,8 +98,8 @@ class Sample {
 
  public:
   Sample(std::vector<Ric::Particle> particles);
-  const Statistics statistics_y() const;
-  const Statistics statistics_ang() const;
+  Statistics statistics_y() const;
+  Statistics statistics_ang() const;
 };
 
 }  // namespace Stats

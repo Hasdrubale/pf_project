@@ -32,6 +32,12 @@ int main() {
   assert(mean_ang > -M_PI / 2 && mean_ang < M_PI / 2);
   in_file >> sigma_ang;
 
+  std::cout << "Comandi ammessi:\nm: inserisce manualmente una "
+               "particella\na: genera n particelle distribuite "
+               "gaussianamente, con i parametri letti da input.txt"
+            << "(inserire il numero n dopo il comando)\ns: calcola le "
+               "statistiche\nq: esce dal programma\n";
+
   while (true) {
     char command{};
     std::cout << "Comando: ";
@@ -81,6 +87,7 @@ int main() {
       int n{};
       int exit{0};
       std::cin >> n;
+      assert(std::cin.good() == true);
 
       std::random_device r;
       std::default_random_engine eng{r()};
@@ -90,23 +97,18 @@ int main() {
       std::vector<Ric::Particle> particles{};
       particles.resize(n, defp);
       std::generate_n(particles.begin(), n, g);
-
-      for (int i{0}; i < n; ++i) {
-        out_init << particles[i].position().x << " "
-                 << particles[i].position().y << " " << particles[i].angle()
-                 << "\n";
-        input.push_back(particles[i]);
-      }
-
       Gen::PartM move(r1, r2, l);
-      std::for_each_n(particles.begin(), n, move);
 
-      for (int i{0}; i < n; ++i) {
-        if (std::abs(particles[i].position().x - l) < 0.00001) {
-          out_fin << particles[i].position().x << " "
-                  << particles[i].position().y << " " << particles[i].angle()
+      for (Ric::Particle& p : particles) {
+        // for (int i{0}; i < n; ++i) {
+        out_init << p.position().x << " " << p.position().y << " " << p.angle()
+                 << "\n";
+        input.push_back(p);
+        move(p);
+        if (std::abs(p.position().x - l) < 0.00001) {
+          out_fin << p.position().x << " " << p.position().y << " " << p.angle()
                   << "\n";
-          output.push_back(particles[i]);
+          output.push_back(p);
         } else {
           ++exit;
         }
@@ -134,13 +136,13 @@ int main() {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << y.app;
-      if (y.simm > 3.01) {
+      if (y.app > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (y.simm < 2.99) {
+      if (y.app < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (y.simm >= 2.99 && y.simm <= 3.01) {
+      if (y.app >= 2.99 && y.app <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
 
@@ -157,13 +159,13 @@ int main() {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << ang.app;
-      if (ang.simm > 3.01) {
+      if (ang.app > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (ang.simm < 2.99) {
+      if (ang.app < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (ang.simm >= 2.99 && ang.simm <= 3.01) {
+      if (ang.app >= 2.99 && ang.app <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
       std::cout << "\n";
@@ -185,13 +187,13 @@ int main() {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << yf.app;
-      if (yf.simm > 3.01) {
+      if (yf.app > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (yf.simm < 2.99) {
+      if (yf.app < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (yf.simm >= 2.99 && yf.simm <= 3.01) {
+      if (yf.app >= 2.99 && yf.app <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
 
@@ -208,13 +210,13 @@ int main() {
         std::cout << " (distribuzione simmetrica)\n";
       }
       std::cout << "Coefficiente di appiattimento: " << angf.app;
-      if (angf.simm > 3.01) {
+      if (angf.app > 3.01) {
         std::cout << " (distribuzione leptocurtica)\n";
       }
-      if (angf.simm < 2.99) {
+      if (angf.app < 2.99) {
         std::cout << " (distribuzione platicurtica)\n";
       }
-      if (angf.simm >= 2.99 && angf.simm <= 3.01) {
+      if (angf.app >= 2.99 && angf.app <= 3.01) {
         std::cout << " (distribuzione mesocurtica)\n";
       }
       std::cout << "\n";

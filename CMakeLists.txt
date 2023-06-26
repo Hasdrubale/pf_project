@@ -24,9 +24,9 @@ add_executable(project main.cpp ric_functions.cpp ric_methods.cpp gen.cpp stats.
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile statistics.t
-  #add_executable(project.t project.test.cpp ric_functions.cpp ric_methods.cpp gen.cpp stats.cpp)
+  add_executable(project.t project.test.cpp ric_functions.cpp ric_methods.cpp gen.cpp stats.cpp)
   # aggiungi l'eseguibile statistics.t alla lista dei test
-  #add_test(NAME project.t COMMAND project.t)
+  add_test(NAME project.t COMMAND project.t)
 
 endif()
 

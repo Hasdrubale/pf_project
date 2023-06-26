@@ -48,7 +48,6 @@ void Gen::PartM::operator()(Ric::Particle& p) {
   Ric::Line go{p};
 
   Ric::Particle const init{p};
-  bool hit{true};
 
   while (true) {
     assert(std::abs(p.position().x) <= l_);
@@ -59,9 +58,9 @@ void Gen::PartM::operator()(Ric::Particle& p) {
 
     if (std::abs(j.y) <= r1_ && j != p.position()) {
       p.set_position(j);
-      p.set_angle(-go.angle());
+      p.set_angle(go.angle());
       go.set_new(p);
-      continue;
+      break;
     }
 
     if (std::abs(k.y) <= r2_) {
@@ -102,13 +101,13 @@ void Gen::PartM::operator()(Ric::Particle& p) {
       continue;
     }
 
-    if (hit) {
+    /*if (hit) {
       p.set_position(init.position());
       p.set_angle(-init.angle());
       go.set_new(p);
       hit = false;
     } else {
       break;
-    }
+    }*/
   }
 }

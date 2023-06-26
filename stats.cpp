@@ -5,7 +5,7 @@
 Stats::Sample::Sample(std::vector<Ric::Particle> particles)
     : particles_{particles} {}
 
-const Stats::Statistics Stats::Sample::statistics_y() const {
+Stats::Statistics Stats::Sample::statistics_y() const {
   std::vector<double> ys;
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
@@ -36,7 +36,7 @@ const Stats::Statistics Stats::Sample::statistics_y() const {
   return statistics;
 }
 
-const Stats::Statistics Stats::Sample::statistics_ang() const {
+Stats::Statistics Stats::Sample::statistics_ang() const {
   std::vector<double> ys;
   ys.resize(particles_.size());
   std::transform(particles_.begin(), particles_.end(), ys.begin(),
