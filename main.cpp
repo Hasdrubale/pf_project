@@ -21,6 +21,15 @@ int main() {
   std::vector<Ric::Particle> input{};
   std::vector<Ric::Particle> output{};
 
+  /*Nel file input.txt inserire i parametri del biliardo e delle distribuzioni
+  gaussiane nel seguente ordine: r1 r2
+  l
+  media y iniziale
+  media angolo iniziale
+  media sigma iniziale
+  media sigma finale
+  */
+
   in_file >> r1;
   in_file >> r2;
   assert(r2 > 0 && r2 < r1);
@@ -100,11 +109,13 @@ int main() {
       Gen::PartM move(r1, r2, l);
 
       for (Ric::Particle& p : particles) {
-        // for (int i{0}; i < n; ++i) {
         out_init << p.position().x << " " << p.position().y << " " << p.angle()
                  << "\n";
         input.push_back(p);
         move(p);
+
+      //se la particella esce dal bordo destro viene salvata in outfin.txt, se esce dal bordo sinistro viene contata come particella non uscita dal biliardo
+
         if (std::abs(p.position().x - l) < 0.00001) {
           out_fin << p.position().x << " " << p.position().y << " " << p.angle()
                   << "\n";
